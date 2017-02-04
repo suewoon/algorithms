@@ -31,7 +31,7 @@ linked = [[3, 3, 3., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
 
 def main():
     testcases = sys.stdin.readline()
-    print('Try %s times..', str(testcases))
+    print('gonna try %s times..', str(testcases))
     for line in sys.stdin():
         print(findMininum(list(line), 0))
 
