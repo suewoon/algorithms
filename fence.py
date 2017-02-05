@@ -7,13 +7,14 @@ Created on Fri Feb  3 01:15:01 2017
 import sys 
 
 heights = []
+
 #todo : read lines from input and call methods 
 def main():
     testCases = int(sys.stdin.readline()) # testcase <= 50 
     for i in range(0, testCases*2,2):
         xrange = int(sys.stdin.readline())
         heights = []
-        for i in sys.stdin.readline().split() : 
+        for i in sys.stdin.readline().split():
             heights.append(int(i))
         print(getMaxArea(0,xrange))
         
@@ -43,4 +44,5 @@ def getMaxArea(left, right):
         maxArea = max(maxArea, (span_right-span_left)*minHeight)
         
     return maxArea
-    
+
+if '__name__' == '__main__' : main()

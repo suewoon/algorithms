@@ -11,16 +11,16 @@ def reverse(itr,compressedQt):
     if(head == 'w' or 'b'):
         compressedQt = compressedQt[1:]
         return head 
-    upperLeft = reverse(iter(list(compressedQt)), compressedQt)
-    upperRight = reverse(iter(list(compressedQt[l])))
-    lowerLeft = reverse()
-    lowerRight = reverse()
+    upperLeft = reverse(itr, compressedQt)
+    upperRight = reverse(itr, compressedQt)
+    lowerLeft = reverse(itr, compressedQt)
+    lowerRight = reverse(itr, compressedQt)
     return str('x')+lowerLeft+lowerRight+upperLeft+upperRight
     
 
 def main():
     testcases =sys.stdin.readline()
-    for line in sys.stdin():
-        print(reverse(iter(list(line)),line))
+    for line in sys.stdin().readlines():
+        print(reverse(iter(list(line[:-1])),line[:-1]))
 
 if __name__ == '__main__': main()
