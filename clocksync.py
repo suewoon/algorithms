@@ -28,7 +28,6 @@ linked = [[3, 3, 3., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
           [0., 0., 0., 3, 3, 3, 0., 0., 0., 3, 0., 0., 0.,
            3, 0., 0.]]
 
-
 def main():
     testcases = sys.stdin.readline()
     print('gonna try %s times..', str(testcases))
