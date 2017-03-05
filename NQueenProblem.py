@@ -10,8 +10,8 @@ class NQueenProblem(object):
     """
     given n*n board place n queens on this board so that 
     they don't attack each other. Finding any placement 
-    of queens which do not attack each other. Once find out 
-    the solution, quit. 
+    of queens which do not attack each other. Once find out
+    the solution, return the solution.
     """
 
     class Position(object):
@@ -49,7 +49,8 @@ class NQueenProblem(object):
 
         return False
 
-s = NQueenProblem()
-positions = s.solveNQueen(4)
-print(positions)
 
+N = int(input())
+s = NQueenProblem()
+positions = s.solveNQueen(N)
+print(positions)
