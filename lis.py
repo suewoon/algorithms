@@ -1,3 +1,5 @@
+
+
 def lis(idx) :
     """
     :param idx: starting index of sequence
@@ -13,6 +15,13 @@ def lis(idx) :
     cache[idx] = ans
     return ans
 
+"""
+Input Example : 
+1
+4
+1 2 3 4
+(answer : 4)
+"""
 testcases = int(input())
 for i in range(testcases):
     length = int(input())

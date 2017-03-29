@@ -1,9 +1,17 @@
-
 class TriPathProblem(object):
     """
     Given the value of each step, choose the path where the summation of
     steps is the max
+    (input example)
+    1
+    4
+    1
+    1 1
+    1 1 1
+    1 1 1 1
+    (ans : 8)
     """
+
     class Tripath(object):
         def __init__(self, row, pathVal):
             assert(int == type(row))
@@ -52,3 +60,5 @@ for i in range(testcase):
         pathVal.append([int(j) for j in input().split()])
     p = TriPathProblem(row,pathVal)
     print(p.countOptimalPath(0,0))
+    print(p.cache2)
+    print(p.Tripath.cache1)
