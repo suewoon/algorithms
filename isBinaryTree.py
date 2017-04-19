@@ -6,50 +6,38 @@ Created on Wed Mar 29 22:05:04 2017
 @author: suewoonryu
 
 solution for https://algospot.com/judge/problem/read/BST
+2
+5
+3 2 4
+0 0 5
+4 5 2
+0 0 1
+0 0 3
+4
+0 0 2
+4 3 3
+1 0 3
+0 0 1
 """
-class Node(object):
-    def __init__(self, left=None, right=None,data=None):
-        self.left = left
-        self.right = right
-        self.data = data
-    
-    def __str__(self):
-        return self.data
-        
-class BST(object):
-    def __init__(self, root=None):
+
+import binarysearchtree 
+       
+class DetermineValidBST(object):
+    #root 를 찾는다. 
+    def __init__(self):
         self.root = root
     
-    def insert(self, data):
-        if self.root is None :
-            return Node(data)
-        else : 
-            return _insert(self, self.root, data)
-    
-    def _insert(self, node, data):
-        if node is None :
-            return Node(data)
-        if node.data < data : 
-            self._insert(node.left, data)
-        else :
-            self._insert(node.right, data)
-        return node 
-    
-    def hasDup(self, tup):
-        tree={}
-        tree[tupe[2]] is None :
-            
+    def find_root():
         
-    def isBST: 
+    def is_bst: 
         
         
     
 testcases = int(input())
 for i in range(testcases):
     n = int(input())
-    bst = BST()
+    bst = DetermineValidBST()
     for i in range(n):
         (left, right, data) = tuple(int(x) for x in input().split())
-        bst.insert(data)
-        tree[data] = (left,right)
+        
     
