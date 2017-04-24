@@ -9,9 +9,16 @@ solution for : https://algospot.com/judge/problem/read/GALLERY
 """
 
 class SensorPlacement(object):
-    def __init__(self):
-        return 
-    
+    def __init__(self,nodes,edges):
+        self.nodes = nodes
+        self.edges = edges
+        self.graph = {}
+        self.initialize_graph()
+        
+    def initialize_graph(self):
+        keydict = {i for i in range(nodes)}
+        self.graph = dict([ (key,[]) for key in keydict ])
+        
     def insert_node(self, nodes):
         return 
     
@@ -20,8 +27,8 @@ class SensorPlacement(object):
     
 testcases = int(input())
 for i in range(testcases):
-    s = SensorPlacement()
-    (g,h) = tuple(int(x) for x in input().split())  
-    for j in range(h):
+    (nodes,edges) = tuple(int(x) for x in input().split())  
+    s = SensorPlacement(nodes,edges)
+    for j in range(edges):
         s.insert_node([int(x) for x in input().split()])
     print(s.get_max_sensors())
