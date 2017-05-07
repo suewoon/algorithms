@@ -4,6 +4,8 @@
 Created on Thu May  4 21:19:36 2017
 
 @author: suewoonryu
+
+graph implementation 
 """
 
 class Vertex(object):
