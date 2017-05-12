@@ -14,6 +14,7 @@ class Breakout(object):
     def __init__(self, adj, destinations):
         self.transform(adj)
         self.destinations = destinations
+        self.cache = {}
 
     def transform(self, adj):
         '''

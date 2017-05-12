@@ -14,6 +14,8 @@ class SensorPlacement(object):
         self.edges = edges
         self.graph = {}
         self.initialize_graph()
+        self.sensors = 0
+        self.visited = set()
         
     def initialize_graph(self):
         '''
@@ -28,10 +30,34 @@ class SensorPlacement(object):
         '''
         self.graph[nodes[0]].append(nodes[1])
         self.graph[nodes[1]].append(nodes[0])
-        
     
+    def return_node(self):
+        '''
+        return a non-visitednode with max edges 
+        '''
+        node_with_max_edges = -1
+        max_edge = 0 
+        for i in set(self.graph.keys()).difference(self.visited):
+           if len(self.graph[i]) > max_edge:
+               max_edge = len(self.graph[i])
+               node_with_max_edges = i 
+        return node_with_max_edges
+    
+    def bfs(self,start_node):
+        '''
+        iterate over graph for one depth 
+        '''
+        if start_node not in self.visited : 
+            self.visited.add(start_node)
+            self.sensors += 1
+            for neighbor in self.graph[start_node]:
+                self.visited.add(neighbor)
+        
     def get_max_sensors(self):
-        return
+        while len(self.visited)<=self.nodes:
+            start_node = self.return_node()
+            self.bfs(start_node)
+        return self.sensors
     
 testcases = int(input())
 for i in range(testcases):

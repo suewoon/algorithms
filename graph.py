@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -9,13 +10,7 @@ graph nodes iteration - BFS, DFS
 """
 import string 
 import queue 
-
-class Path(object):
-    def __init__(self, node=None, path_length=0):
-        self.node = node ,
-        self.path_length = path_length
-        
-        
+            
 class Graph(object):
     def __init__(self):
         self.graph = {}
@@ -60,18 +55,18 @@ class Graph(object):
         '''
         visited_nodes = set()
         to_visit = queue.Queue(0)
-        p = Path(start_node,0)
+        to_visit.put(start_node)
         while not to_visit.empty():
-            next_path = to_visit.get()
+            next_node = to_visit.get()
             if not visited_nodes.__contains__(next_node):
-                print("Reached: ",next_path.node,"Path length: ",next_path.path_length)
-                visited_nodes.add(next_path.node)
-                for neighbor in self.graph[next_node.node]:
-                    newPath
+                print("Reached: ",next_node)
+                visited_nodes.add(next_node)
+                for neighbor in self.graph[next_node]:
+                    to_visit.put(next_node)
         
 if __name__ == "__main__":   
     g = Graph()
     start_node = 'A'
     g.dfs(start_node)
-          g.bfs(start_node)
-    
+    g.bfs(start_node)
+
