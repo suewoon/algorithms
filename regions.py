@@ -11,7 +11,6 @@ Created on Tue May  9 14:26:49 2017
 4 0 6 2
 
 https://www.acmicpc.net/problem/2583
-
 """
 import sys
 sys.setrecursionlimit(10000)
