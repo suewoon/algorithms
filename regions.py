@@ -13,12 +13,15 @@ Created on Tue May  9 14:26:49 2017
 https://www.acmicpc.net/problem/2583
 
 """
+import sys
+sys.setrecursionlimit(10000)
 
 class SquareGrid(object):
     def __init__(self,width, height):
         self.width = width
         self.height = height
         self.walls = []
+        self.visited=set()   
         
     def in_bounds(self, id):
         '''
@@ -62,42 +65,37 @@ class SquareGrid(object):
         
         self.walls =list(set(self.walls)) #remove duplicate
 
-    def dfs(self,coord,visited=None):
-        (x,y) = coord 
+
+def dfs(graph, coord):
+    (x,y) = coord
+    graph.visited.add(coord)
+    for neighbor in graph.neighbors(coord):
+        if neighbor not in graph.visited :
+            graph.visited.add(neighbor)
+            dfs(graph,neighbor)
+    return 
+
+def get_number_of_rooms(graph):
+    count=0
+    areas=[0]
+    for i in range(graph.height):
+        for j in range(graph.width):
+            if (i,j) not in graph.visited and (i,j) not in graph.walls: 
+                dfs(graph,(i,j))
+                count+=1 
+                areas.append(len(graph.visited))
+    return count, areas
+
+if __name__ == '__main__':
+    (height, width, k) = tuple(int(x) for x in input().split())
+    grid = SquareGrid(width,height)
+    for i in range(k):
+        cord = [int(x) for x in input().split()]
+        grid.set_wall(cord[:2],cord[2:])
+    count , areas = get_number_of_rooms(grid)
+    areas = [ areas[i+1]-areas[i] for i in range(len(areas)-1)].sort()
+    print(areas)
+    print(count)
+    print(*areas,sep=' ')
         
-        if visited==None :
-            visited = set()
-
-        visited.add(coord)
-        
-        for neighbor in self.neighbors(coord):
-            if neighbor not in visited :
-                visited.add(neighbor)
-                self.dfs(neighbor,visited)
-        return visited 
-        
-
-grid = SquareGrid(7,5)        
-grid.set_wall((0,2), (4, 4))
-grid.set_wall((1,1), (2, 5))
-grid.set_wall((4,0), (6, 2))
-x = grid.dfs((3,0))
-
-#if __name__ == '__main__':
-#    (height, width, k) = tuple(int(x) for x in input().split())
-#    grid = SquareGrid(width,height)
-#    for i in range(k):
-#        cord = input().split()
-#        grid.set_wall(cord[:2],cord[2:])
-
-#    initial_grid = []
-#    for i in range(height):
-#       for j in range(width):
-#           initial_grid.append((i,j))
-#    
-#    grid.dfs(list(set(initial_grid)-set(grid.walls)))
-
-#    print(len(regions))
-#    ' '.join([ str(regions[i]) for i in regions.keys()])
-    
 
