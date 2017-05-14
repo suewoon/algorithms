@@ -65,7 +65,7 @@ class SquareGrid(object):
         
         self.walls =list(set(self.walls)) #remove duplicate
 
-
+#recursive dfs
 def dfs(graph, coord):
     (x,y) = coord
     graph.visited.add(coord)
@@ -93,8 +93,7 @@ if __name__ == '__main__':
         cord = [int(x) for x in input().split()]
         grid.set_wall(cord[:2],cord[2:])
     count , areas = get_number_of_rooms(grid)
-    areas = [ areas[i+1]-areas[i] for i in range(len(areas)-1)].sort()
-    print(areas)
+    areas = sorted([ areas[i+1]-areas[i] for i in range(len(areas)-1)])
     print(count)
     print(*areas,sep=' ')
         
