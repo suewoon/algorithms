@@ -1,0 +1,16 @@
+Index: jumpgame.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- jumpgame.py	(revision 7cc74812670e4167af84bba3c0f764b47f70737e)
++++ jumpgame.py	(revision )
+@@ -31,7 +31,7 @@
+     cache = {}
+     for j in range(n):
+         board.append(sys.stdin.readline()[:-1].split(' '))
+-    print(board)
++    #print(board)
+     if(jump(0,0)):
+         print('YES')
+     else:
