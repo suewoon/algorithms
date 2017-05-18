@@ -6,8 +6,10 @@ Created on Sun May 14 10:59:25 2017
 @author: suewoonryu
 
 https://www.acmicpc.net/problem/1695
-
+12135 
 """
+import sys
+sys.setrecursionlimit(10000)
 
 def make_palindrome(seq,count):
     if len(seq) < 2  : return count 
@@ -15,6 +17,10 @@ def make_palindrome(seq,count):
         count+=1
         seq.append(seq[0])
     return make_palindrome(seq[1:-1],count)
+
+def find_sub_palindrome(seq):
+    
+    return seq
 
 if __name__=='__main__':
     n = int(input())
