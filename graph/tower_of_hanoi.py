@@ -78,12 +78,12 @@ for i in range(testcases):
         for j in arr[1:] : 
             initial[j-1]=i+1
     initial = ''.join([str(i) for i in initial])
-    #print(intial)
+    print(initial)
     for i in range(4):
         arr = [int(x) for x in input().split()]
         for j in arr[1:] : 
             goal[j-1]=i+1
     goal = ''.join([str(i) for i in goal])
-    #print(goal)
+    print(goal)
     print(count_cost(bfs(initial,goal),initial,goal))
 
