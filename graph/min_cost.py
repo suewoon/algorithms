@@ -12,14 +12,14 @@ import heapq as pq
 
 class Graph(object):
     def __init__(self, n):
-        self.graph = [ [0 for _ in range(n)] for _ in range(n)]
+        self.graph = [ [-1 for _ in range(n)] for _ in range(n)]
     
     def make_graph(self,start,end,cost):
-        if self.graph[start-1][end-1]==0 or cost < self.graph[start-1][end-1] :
+        if self.graph[start-1][end-1]==-1 or cost < self.graph[start-1][end-1] :
             self.graph[start-1][end-1] = cost 
     
     def neighbors(self, current):
-        neighbors = [ idx+1 for idx in range(len(self.graph)) if self.graph[current-1][idx] !=0]
+        neighbors = [ idx+1 for idx in range(len(self.graph)) if self.graph[current-1][idx] !=-1]
         #print(current, neighbors)
         return neighbors
     
