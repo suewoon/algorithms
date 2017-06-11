@@ -7,10 +7,11 @@ Created on Thu May 18 23:52:28 2017
 
 https://algospot.com/judge/problem/read/ROUTING
 """
-
 import heapq
+import sys
+input = sys.stdin.readline
 
-# --> adj matrix로 풀어볼것 
+# {1:(2,cost), 2:(1,cost)}
 class Graph(object):
     def __init__(self):
         self.edges = {}
