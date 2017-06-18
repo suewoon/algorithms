@@ -52,9 +52,7 @@ def min_taking_time(graph,v):
                     heapq.heappush(elements,(new_time,neighbor))
                     
     return time_in_total 
-        
-        
-               
+            
 if __name__=='__main__':
     testcases = int(input())
     for i in range(testcases):
