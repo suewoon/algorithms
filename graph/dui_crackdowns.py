@@ -15,7 +15,7 @@ input = sys.stdin.readline
 class Graph(object):
     def __init__(self,v): 
         self.dist_table= [[math.inf for _ in range(v)] for _ in range(v)] #table of shortest-path between all pairs of vertices
-        self.total_time = self.dist_table
+        self.total_time = self.dist_table[:]
         self.set_diagonal(v)
         
     def set_dist(self, id1, id2, cost):
