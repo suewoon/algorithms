@@ -63,8 +63,7 @@ if __name__=='__main__':
             (a,b,time)=tuple(int(x) for x in input().split())
             g.add_edge(a,b,time)
         g.fire_area = [int(x)for x in input().split()]
-        g.fire_station = [int(x) for x in input().split()]
-#        
+        g.fire_station = [int(x) for x in input().split()]        
 #        print(g.graph)
 #        print(g.fire_area)
 #        print(g.fire_station)

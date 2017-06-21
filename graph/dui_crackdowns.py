@@ -29,19 +29,20 @@ class Graph(object):
     def set_time_delay(self, time_delay):
         self.time_delay = time_delay
     
+    def set_total_time(self):
+        self.total_time = self.dist_table[:]
+    
 def floyd_warshall(graph,v):
-    default_delay=graph.time_delay[0]
-    total_time = graph.dist_table[:]
-    for k in range(1,v):
-        delay=graph.time_delay[k]
+    delay = graph.time_delay
+    for k in range(v):
         for i in range(v):
-            for j in range(v):
-                if graph.dist_table[i][j] > graph.dist_table[i][k] + graph.dist_table[k][j]:
-                    graph.dist_table[i][j]= graph.dist_table[i][k] + graph.dist_table[k][j]
-                total_time[i][j] = min(total_time[i][k]+delay+total_time[k][j],total_time[i][j]+default_delay)
-    return total_time
+            for j in range(v):s
+                if k != i and k!= j:
+                    graph.dist_table[i][j]=min(graph.dist_table[i][k]+graph.dist_table[k][j], graph.dist_table[i][j])
+                    graph.total_time[i][j] = min(graph.dist_table[i][k]+delay[k]+graph.dist_table[k][j], graph.total_time[i][j])
 
-if __name__ == '__main__' : 
+if __name__=='__main__':
+    
     (v,e) = tuple(int(x) for x in input().split())
     time_delay = [int(x) for x in input().split()]
     
@@ -52,9 +53,16 @@ if __name__ == '__main__' :
         (id1, id2, cost)=tuple(int(x) for x in input().split())
         graph.set_dist(id1,id2,cost)
     
+    graph.set_total_time()
+    floyd_warshall(graph,v)
+    print(graph.total_time)
+
     testcases = int(input())
-    
     for case in range(testcases):
         (start,end) = tuple(int(x) for x in input().split())
-        time_taken = floyd_warshall(graph,v)
-        print(time_taken[start][end])
+        print(graph.total_time[start-1][end-1])
+
+
+
+
+
