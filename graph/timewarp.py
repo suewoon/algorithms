@@ -1,52 +1,75 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jun 18 21:49:23 2017
+Created on Sun Jun 25 11:58:06 2017
 
 @author: suewoonryu
-
-solution for : https://algospot.com/judge/problem/read/TIMETRIP
 """
-import sys 
-import math
-input = sys.stdin.readline 
+
+import sys
+input = sys.stdin.readline
 
 class Graph(object):
-    def __init__(self,g):
-        #최단 시간으로 이동하는경우 
-        self.spent_yrs = [[math.inf for _ in range(g)] for _ in range(g)] 
-        for i in range(g):
-            self.spent_yrs[i][i] = 0
-                          
-    def set_yrs_spent(self,a,b,d):
-        self.yrs_spent[a][b] = d 
+    def __init__(self):
+        #최단 시간으로 이동하는경우
+        self.yrs_spent={}
+    def set_yrs_spent(self,line):
+        (a,b,d) = tuple(int(x) for x in line.split())
+        if a not in self.yrs_spent:
+            self.yrs_spent[a]=[(b,d)]
+        else :
+            self.yrs_spent[a].append((b,d))
+
+def initialize(graph,source,g):
+    d = {} #destination
+    for node in range(g):
+        d[node] = float('inf')
+    d[source] = 0
+    return d
+
+def relax(node, neighbor_list, d,is_max):
+    neighbor = neighbor_list[0] 
+    cost = neighbor_list[1]
+    if is_max:
+        cost  =  cost*-1 
+    if d[neighbor] > d[node]+cost :
+        d[neighbor] = d[node]+cost
+
+def get_time_change(graph,source,g,is_max=False):
+    try:
+        d = initialize(graph,source,g)
+
+    #bellman-ford algorithm
+        for i in range(g-1):
+            for u in graph:
+                for v in graph[u]:
+                    relax(u,v,d,is_max)
+
+    # negative-weight cycle check
+        for node  in graph:
+            for neighbor_list in graph[u]:
+                neighbor = neighbor_list[0]
+                cost = neighbor_list[1]
+                assert d[neighbor] <= d[u]+cost
     
-    def set_yrs_spent_max(self):
-        #최장 시간으로 이동하는 경우
-        self.yrs_spent_max = self.yrs_spend[:]
-        
-def get_time_change(graph,g):
-    #floyd_warshall algorithm     
-    for k in range(g):
-        for i in range(g):
-            for j in range(g):
-                if graph.yrs_spent[i][j] > graph.yrs_spent[i][k]+graph.yrs_spent[k][j]:
-                    graph.yrs_spent[i][j] = graph.yrs_spent[i][k]+graph.yrs_spent[k][j]
-                if graph.yrs_spent_max[i][j] > graph.yrs_spent_max[i][k]+graph.yrs_spent_max[k][j]:
-                    graph.yrs_spent_max[i][j] = graph.yrs_spent_max[i][k]+graph.yrs_spent_max[k][j]
-    
+    except AssertionError: 
+        d[neighbor]=1001 
+
+    return d
+
 if __name__=='__main__':
     testcases = int(input())
     for case in range(testcases): 
         (g,w) = tuple(int(x) for x in input().split())
-        graph = Graph(g)
+        graph = Graph()
         for wormhole in range(w):
-            #웜홂 a->b 이동하는데 d년 만큼 시간이 변화 
-            (a,b,d) = tuple(int(x) for x in input().split())
-            graph.set_yrs_spent(a,b,d)
-        graph.set_yrs_spent_max()
-        graph.get_time_change(graph,g)
-        print(graph.set_yrs_spent[0][1], graph.set_yrs_spent_max[0][1])
-            
-        
-
+            #wormhole a->b 이동하는데 d년 만큼 시간이 변화 
+            graph.set_yrs_spent(input())
+        min_d  = get_time_change(graph.yrs_spent,0,g)
+        min_time = min_d[1] if min_d[1]!= float('inf') else 'UNREACHABLE'
+        if min_time == 'UNREACHABLE':
+            print(min_time)
+        else : 
+            max_d = get_time_change(graph.yrs_spent,0,g,True) 
+            max_time = -max_d[1] 
+            print(min_time, max_time) 

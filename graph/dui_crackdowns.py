@@ -8,13 +8,12 @@ Created on Sun Jun 18 18:32:47 2017
 solution for : https://algospot.com/judge/problem/read/DRUNKEN
 """
 
-import sys
-import math 
+import sys 
 input = sys.stdin.readline 
 
 class Graph(object):
     def __init__(self,v): 
-        self.dist_table= [[math.inf for _ in range(v)] for _ in range(v)] #table of shortest-path between all pairs of vertices
+        self.dist_table= [[float('inf') for _ in range(v)] for _ in range(v)] #table of shortest-path between all pairs of vertices
         self.set_diagonal(v)
         
     def set_dist(self, id1, id2, cost):
@@ -30,16 +29,17 @@ class Graph(object):
         self.time_delay = time_delay
     
     def set_total_time(self):
+        
         self.total_time = self.dist_table[:]
     
 def floyd_warshall(graph,v):
     delay = graph.time_delay
     for k in range(v):
         for i in range(v):
-            for j in range(v):s
-                if k != i and k!= j:
-                    graph.dist_table[i][j]=min(graph.dist_table[i][k]+graph.dist_table[k][j], graph.dist_table[i][j])
-                    graph.total_time[i][j] = min(graph.dist_table[i][k]+delay[k]+graph.dist_table[k][j], graph.total_time[i][j])
+            for j in range(v):
+                if graph.dist_table[i][j] > graph.dist_table[i][k]+delay[k]+graph.dist_table[k][j]:
+                    graph.dist_table[i][j] = graph.dist_table[i][k]+graph.dist_table[k][j] 
+                    graph.total_time[i][j] = graph.dist_table[i][k]+delay[k]+graph.dist_table[k][j] 
 
 if __name__=='__main__':
     
