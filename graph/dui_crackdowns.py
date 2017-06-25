@@ -29,17 +29,27 @@ class Graph(object):
         self.time_delay = time_delay
     
     def set_total_time(self):
+<<<<<<< HEAD
         
+=======
+>>>>>>> 13608ec30b6a5201b2b5844ddb657ca73a6d302b
         self.total_time = self.dist_table[:]
     
 def floyd_warshall(graph,v):
     delay = graph.time_delay
     for k in range(v):
         for i in range(v):
+<<<<<<< HEAD
             for j in range(v):
                 if graph.dist_table[i][j] > graph.dist_table[i][k]+delay[k]+graph.dist_table[k][j]:
                     graph.dist_table[i][j] = graph.dist_table[i][k]+graph.dist_table[k][j] 
                     graph.total_time[i][j] = graph.dist_table[i][k]+delay[k]+graph.dist_table[k][j] 
+=======
+            for j in range(v):s
+                if k != i and k!= j:
+                    graph.dist_table[i][j]=min(graph.dist_table[i][k]+graph.dist_table[k][j], graph.dist_table[i][j])
+                    graph.total_time[i][j] = min(graph.dist_table[i][k]+delay[k]+graph.dist_table[k][j], graph.total_time[i][j])
+>>>>>>> 13608ec30b6a5201b2b5844ddb657ca73a6d302b
 
 if __name__=='__main__':
     
