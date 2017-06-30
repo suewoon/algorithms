@@ -32,10 +32,8 @@ class Game(object):
 		to_visit.append(id1)
 		visited.add(id1)
 		
-		depth =0 
 		while to_visit :
 			person  = to_visit.pop()
-			depth+=1 
 			for friend in self.relationships.graph[person]:
 				if friend not in visited :
 					to_visit.append(friend)
@@ -44,14 +42,17 @@ class Game(object):
 		
 		self.degrees[id1]+=sum(degree)		
 
-if __name__ == '__main__' : 
+if __name__ == '__main__' :
+    #n: number of users ,m : how many relationships with friends
 	(n, m) = tuple(int(x) for x in input().split())
-	game = Game(n) # 6 degrees of Kevin Bacon Game ;n : number of users , m : how many relationships with friends 
-	for i in range(m):	
+    
+	game = Game(n) #6 degrees of Kevin Bacon Game
+
+    for i in range(m): #make graph from inputs
 		(id1 ,id2) = tuple(int(x) for x in input().split())
 		game.relationships.add_friend(id1-1,id2-1)
 	
-	for i in range(n):
+    for i in range(n): #calculate degrees of each node
 		game.get_degrees(i)
 	
 	print(game.degrees.index(min(game.degrees))+1)
