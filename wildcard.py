@@ -1,65 +1,53 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Feb 10 00:13:21 2017
+#!/usr/bin/env/ python3
+#solution for https://algospot.com/judge/problem/read/WILDCARD
+#Created on Fri Feb 10 00:13:21 2017
 
-@author: suewoonryu
-"""
-"""
+import string 
 
-# a,b is the index of string
-def match(a,b):
-    if a > len(pattern)-1 or b > len(file)-1:
-        return False
+class Wildcard(object):
+    def __init__(self, pattern):
+        self.pattern = pattern
 
-    cache = [[False]*len(pattern) for i in range(len(file))]
+    def is_matched(self, string):
+       len_pattern == len(self.pattern)
+       len_str = len(string)
 
-    # print(cache)
-    if cache(a,b) :
-        return cache(a,b)
-    else:a
-        for i in range(len(pattern)):
-            for j in range(len(file)):
-                if pattern[i]=='?' or pattern[i]==file[j]:
-                    ans = match(a+1,b+1)
-                    cache[i][j] = ans
-                    return ans
-                elif pattern[i]=='*':
-                    ans = match(a+1, b) or match(a, b+1)
-                    cache[i][j] = ans
-                    return ans
+       #empty pattern can only match with empty string  
+       if len_pattern == 0 :
+           return len_str==0
+
+        """cache[i][j] is true first i chars in given string matches the first j
+        chars of pattern """
+        cache = [[False]*(len_pattern+1) for i in range(len_str+1)]
+        cache[0][0] = True
+        # pattern is null 
+        for i in  range(len_str+1):
+            cache[i][0] = False
+        #text is null 
+        for j in range(len_pattern+1,0,-1):
+            if pattern[j-1]=='*':
+                cache[0][j] = cache[0][j-1]
+
+        for i in range(len_str+1,0,-1):
+            for j in range(len_pattern+1,0,-1):
+                if self.pattern[j-1] == '*' :
+                    cache[i][j] = cache[i][j-1] or cache[i-1][j] 
+                elif self.pattern[j-1] == '?' or
+                self.pattern[j-1]==string[i-1]:
+                    cache[i][j] = cache[i-1][j-1]
                 else :
-                     return False
+                    cache[i][j] = False 
+
+        return cache[len_str-1][len_pattern-1] 
 
 
+if __name__ == '__main__': 
+    testcases = int(input())
+    for i in range(testcases):
+        pattern  = input() 
+        wc = Wildcard(pattern)
+        n_of_files = int(input())
+        for j in range(n_of_files):
+            file_name = input() 
+            if wc.is_matched(file_name) : print(file_name)
 
-def match(pattern, string):
-   n = len(string)
-   m = len(pattern)
-   if m==0:
-       return n==0
-   cache =  [[False]*n for i in range(m)]
-   cache[0][0] = 0 # empty pattern can match with empty string
-
-   for i in range(1,n+1):
-       for j in range(1,m+1):
-           if pattern[j-1] =='*':
-               cache[i][j] = cache[i][j-1] or cache[i-1][j]
-           elif pattern[j-1]=='?' or (string[i-1] == pattern[j-1]):
-                cache[i][j] = cache[i-1][j-1]
-           else :
-               cache[i][j] = False
-
-    return cache[n][m]
-
-    
-testcases = int(input())
-for i in range(testcases):
-     pattern = input()
-     nOfFiles = int(input())
-     for j in range(nOfFiles):
-         cache = []
-         file = input()
-         # if match(pattern, file) : print(file)
-         if match(0,0):
-
-             print(file)
