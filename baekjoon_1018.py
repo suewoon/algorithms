@@ -1,9 +1,8 @@
 #!/usr/bin/env python3 
-"""solution for https://www.acmicpc.net/problem/1018
+"""solution for https://www.acmicpc.net/problem/1019
 """
 
-from pprint import pprint
-import numpy as np 
+#import numpy as np 
 
 class Board(object):
     def __init__(self,n,m):
@@ -11,6 +10,7 @@ class Board(object):
         self.cols = m 
         self.original_board = []
         self.set_standard_case()
+
 
     def set_standard_case(self):
         line1 = [-1, 1, -1, 1, -1, 1, -1, 1]
@@ -25,6 +25,7 @@ class Board(object):
                 self.case1.append(line1)
                 self.case2.append(line2)
 
+
     def create_board(self, string):
         line = []
         for char in list(string):
@@ -33,6 +34,7 @@ class Board(object):
                 elif char == 'B':
                     line.append(1)
         self.original_board.append(line)
+
 
     def crop_board(self):
         changes=[[0]*(self.rows-7) for i in range(self.cols-7)]
@@ -47,13 +49,19 @@ class Board(object):
 
 
     def sum(self, cropped_board):
-        sum1, sum2  = 0, 0
-        sum1 = np.sum(np.subtract(self.case1,cropped_board))*0.5
-        sum2 = np.sum(np.subtract(self.case2,cropped_board))*0.5
+        #sum1 = np.sum(np.subtract(self.case1,cropped_board))*0.5
+        #sum2 = np.sum(np.subtract(self.case2,cropped_board)))*0.5
+        sum1 = self.numpy_subtract(self.case1, cropped_board)*0.5
+        sum2 = self. numpy_subtract(self.case2, cropped_board)*0.5
         return min(abs(sum1), abs(sum2)) 
 
-    def print_board(self):
-        pprint(self.cropped_board)
+
+    def numpy_subtract(self,m1, m2):
+        sum=0
+        for i in range(len(m1[0])):
+            for j in range(len(m1)):
+                sum += (m1[i][j]-m2[i][j])
+        return sum 
 
 
 def main():
@@ -61,7 +69,8 @@ def main():
     board = Board(n, m)
     for i in range(n):
         board.create_board(input())
-    print(board.crop_board())
+    print(int(board.crop_board()))
+
 
 if __name__ == '__main__':
     main() 
