@@ -1,4 +1,5 @@
-
+#!/usr/bin/env python3 
+#  solution for https://algospot.com/judge/problem/read/LIS
 
 def lis(idx) :
     """
@@ -15,20 +16,17 @@ def lis(idx) :
     cache[idx] = ans
     return ans
 
-"""
-Input Example : 
-1
-4
-1 2 3 4
-(answer : 4)
-"""
-testcases = int(input())
-for i in range(testcases):
-    length = int(input())
-    seq = [int(j) for j in input().split()]
-    cache = [-1]*length
-    ans = 0
-    for x in range(0,length):
-        ans = max(ans,lis(x))
-    print(ans)
+def main():
+    testcases = int(input())
+    for i in range(testcases):
+        length = int(input())
+        seq = [int(j) for j in input().split()]
+        cache = [-1]*length
+        ans = 0
+        for x in range(0,length):
+            ans = max(ans,lis(x))
+        print(ans)
     #print(cache)
+
+if __name__ == '__main__':
+    main()
