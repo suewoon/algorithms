@@ -17,18 +17,20 @@ class Wildcard(object):
 
         cache = [[False]*(len_pattern+1) for i in range(len_str+1)]
         cache[0][0] = True
+
         # pattern is null 
         for i in range(len_str+1):
             cache[i][0] = False
+
         #text is null 
         for j in range(1, len_pattern+1):
             if self.pattern[j-1] == '*':
                 cache[0][j] = cache[0][j-1]
-
+        #else 
         for i in range(1, len_str+1):
             for j in range(1, len_pattern+1):
                 if self.pattern[j-1] == '*':
-                    cache[i][j] = cache[i][j-1] or cache[i-1][j]
+                    cache[i][j] = cache[i][j-1]
                 elif self.pattern[j-1] == '?' or  self.pattern[j-1]==string[i-1]:
                     cache[i][j] = cache[i-1][j-1]
                 else :
