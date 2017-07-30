@@ -4,7 +4,10 @@
 ################################################################################
 
 def attempt1(problem):
- 
+    '''
+    divide the matrix by half (row*columns/2) and so on.. until find one-column
+    matrix
+    '''
     # if it's empty array, return None
     if problem.numRow <= 0 or problem.numCol <= 0:
         return None
@@ -40,6 +43,21 @@ def attempt1(problem):
     sub = problem.getSubProblemHaving(subprobs, neighbor)
     result = attempt1(sub)
     return problem.getLocation(sub, result)
+
+def attempt2(problem, loc = (0,0)):
+    '''
+    greedy-ascent. start from (0,0) and keep searching until reaching a peak
+    '''
+    # if it's empty array, return None 
+    if problem.numRow <= 0 or  problem.numCol <=0:
+        return None
+
+    neighbor = problem.getGreaterNeighbor(loc)
+    if neighbor == loc:
+        return loc
+
+    # there is greater neighbor than loc, so move to the neighbor and recurse
+    return attempt2(problem, neighbor)
 
 
 def crossProduct(list1, list2):
