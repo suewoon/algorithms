@@ -1,64 +1,62 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Feb 26 06:31:29 2017
+#!/usr/bin/env python3
+#  solution for https://algospot.com/judge/problem/read/PI
 
-@author: suewoonryu
-"""
 import numpy as np
 
-class pi(object): 
-    def __init__(self, piList):
-    """
-    initialize a pi object 
-    piList : 
-    """
-    self.piList = piList
-    self.cache = {}
-        
-    def getDifficulty(self, subList):
-    """    
-    """
-    if cache[int(''.join(subList))] : 
-        return cache[int(''.join(subList))]
-        
-    #1 : all the same number 
-    if np.all(np.diff(subList, 1) == 0) :
-        return 1 
-    
-    #2 : monotonic increasing or decreasing 
-    if np.all(np.diff(subList, 1) == 1) or not np.all(np.diff(subList,1) == -1) : 
-        return 2 
-    
-    #3 : 두 수가 번갈아 나타날 때
-    if np.all(abs(np.diff(subList,1)) == abs(subList[1]-subList[0])) : 
-        return 4
-    
-    #5 : arithmetic sequence 
-    if np.all(np.diff(subList, 2) == 0): #differenced twice 
-        return 5
-    
-    return 10 
-    
+class PiFraction(object):
+    def __init__(self):
+        pass
 
-    def minDifficulty(self, list):   
-    """
-    return minumum difficulty of the given list 
-    make the sublist of which length is 3 ~ 5 and calculate get the 
-    difficulty then recursively call the function
-    """
-    ans = 0 
-    for i in range(2,5):
-        ans = min(getDifficulty(list[:i+1])+minDifficulty(list[i+1:]))
-    return ans 
-   
-   
-try:
+    def diff(self, _list, degree=1):
+        ans =  [(_list[i+1]-_list[i]) for i in range(len(_list)-1)]
+        if degree == 1:
+            return ans
+        else :
+            return self.diff(ans)
+
+    def get_difficulty(self, subList):
+        if len(subList) == 0:
+            return 0
+        """
+        if self.cache[int(''.join(subList))] :
+            return self.cache[int(''.join(subList))]
+        """
+        if all(self.diff(subList, 1) == 0):
+            return 1
+
+        if all(self.diff(subList, 1) == 1) or  all(self.diff(subList,1) == -1) :
+            return 2
+
+        if all(abs(self.diff(subList,1)) == abs(subList[1]-subList[0])) :
+            return 4
+
+        if all(self.diff(subList, 2) == 0):
+            return 5
+
+        return 10
+
+    def min_difficulty(self, _list): 
+        """
+        return minumum difficulty of the given list 
+        make the sublist of which length is 3 ~ 5 and calculate get the 
+        difficulty then recursively call the function
+        """
+        if len(_list) <= 5:
+            return self.get_difficulty(_list)
+        else:
+            ans = float('inf')
+            for i in range(3, 6):
+                ans = min(self.min_difficulty(_list[:i])+self.min_difficulty(_list[i:]), ans)
+            return ans
+
+
+def main():
     testcases = int(input())
-    assert type(testcases) == int
     for i in range(testcases):
-        piList = [int(i) for i in input().split()]
-        #pi = input()
-        print(minDifficulty(pi))
-except TypeError: 
-    print('Invalid Input Type')
-    
+        _list = list(int(x) for x in input())
+        fraction = PiFraction()
+        print(fraction.min_difficulty(_list))
+
+
+if __name__ == '__main__':
+    main()
