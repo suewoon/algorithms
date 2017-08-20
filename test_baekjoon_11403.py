@@ -8,6 +8,8 @@ class TestClass(object):
         g = Graph(3)
         for string in '010\n001\n100'.split('\n'):
             g.make_graph(string)
-        g.print_reachability_graph()
-        assert g.reachability_graph[1][1] == 0
+        ans = g.is_reachable()
+        print(ans)
+        #g.print_reachability_graph()
+        assert ans[1][1] == 0
 

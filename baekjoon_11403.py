@@ -10,20 +10,27 @@ class Graph(object):
 
     def is_reachable(self):
         """floyd-warshall"""
-        for k in range(1,self.d):
+        reachability_graph = self.graph[:]
+        for k in range(self.d):
             for i in range(self.d):
                 for j in range(self.d):
-                    if 
+                    if self.graph[i][k] ==1 and self.graph[k][j] ==1:
+                        reachability_graph[i][j] =1
+        return reachability_graph
 
 
     def print_reachability_graph(self):
-        self.is_reachable(0)
-        for row in self.reachability_graph:
+        for row in self.is_reachable():
             print(' '.join(str(val) for val in row))
 
 def main():
     d = int(input())
     graph = Graph(d)
     for i in range(d):
-        graph.make_graph(input())
+        _string = input().split()
+        #print(_string)
+        graph.make_graph(_string)
     graph.print_reachability_graph()
+
+if __name__ == '__main__':
+    main()
