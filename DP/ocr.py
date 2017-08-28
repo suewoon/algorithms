@@ -1,37 +1,35 @@
 #!/usr/bin/env python3
+import numpy as np 
 
 class Reader(object):
     def __init__(self, words):
         self.words = words
+        self.first_pos_probs = []
+        self.cond_probs = []
+        self.classified_probs = []
 
     def read_input(self, _input, param):
-        _list = [float(x) for x in _input.split(' ')
-        def read_input_helper(_array, _list):
-            if _array:
-                _array.append(_list)
-            else:
-                 _array = [_list] 
-
+        _list = [float(x) for x in _input.split(' ')]
         if param == 'first_pos_probs':
-            read_input_helper(self.first_pos_probs, _list)
+            self.first_pos_probs.append(_list)
         elif param == 'cond_probs':
-            read_input_helper(self.cond_probs, _list)
+            self.cond_probs.append(_list)
         elif param == 'classified_probs':
-            read_input_helper(self.classified_probs, _list)
+            self.classified_probs.append(_list)
 
     def read_words(self, _input):
+        _input = _input.split(' ')[1:]
+        print('input', _input)
         ans = []
         for word in _input:
             if _input.index(word) == 0:
-                 p = [ (p_ab/p_a) for p_a, p_ab in zip(self.first_pos_probs,
-                                                      self.classified_probs[0]) if p_a!=0 ]
+                p = [(p_ab*p_a) for p_a, p_ab in zip(self.first_pos_probs[0], self.classified_probs[0]) if p_a != 0]
             else:
-                 idx = self.words.index(word)
-                 pre_idx = self.words.index(ans[-1])
-                 p = [ (p_ab/p_a) for p_a, p_ab in
-                      zip(self.cond_probs[pre_idx],
-                          self.classified_probs[idx]) if p_a!=0]
-
+                idx = self.words.index(word)
+                pre_idx = self.words.index(ans[-1])
+                p = [(p_ab*p_a) for p_a, p_ab in zip(self.cond_probs[pre_idx],
+                                                     np.array(self.classified_probs)[:, idx]) if p_a != 0]
+            print(word, p, p.index(max(p)))
             ans.append(self.words[p.index(max(p))])
         return ' '.join(ans)
 
@@ -46,7 +44,11 @@ def main():
     for i in range(m):
         reader.read_input(input(), 'classified_probs')
     for i in range(q):
-        reader.read_words(input().split(' ')[1:])
+        reader.read_words(input())
+
+
+if __name__ == '__main__':
+    main()
 
 
 
