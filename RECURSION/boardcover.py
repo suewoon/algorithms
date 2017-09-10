@@ -13,21 +13,14 @@ class Board(object):
         self.blocks = [[(0, 0), (1, 0), (0, 1)],[(0, 0), (0, 1), (1, 1)],
                       [(0, 0), (1, 0), (1, 1)],[(0, 0), (1, 0), (1, -1)]]
 
-    def make_board(self, string):
+    def make_board2(self, string):
         self.board.append(list(string))
-    
-    def print_board(self,board):
-        if board is None:
-            return
 
-        for row in board:
-            for char in row:
-                if char == '#':
-                    print(colorful.red('#'), end='')
-                elif char == '.' :
-                    print(colorful.white('.'), end='')
-            print()
-            
+    def make_board(self):
+        for input_ in range(self.h):
+            self.board.append(list(input())[:-1])
+        print(self.board)
+
     def cover(self):
         board_to_cover = self.board[:]
         return self.cover_helper(board_to_cover)
@@ -37,7 +30,6 @@ class Board(object):
 
         for i in range(self.h):
             for j in range(self.w):
-                print(i,j)
                 if board[i][j] == '.':
                     blank = (i, j)
                     available = True
@@ -45,25 +37,24 @@ class Board(object):
             else :
                     continue
             break
-        
+
         if not available:
             return 1
+        elif available:
+            ans = 0
+            for block_type in self.blocks:
+                x, y = blank[0], blank[1]
+                delta_1_x, delta_1_y = block_type[1][0], block_type[1][1]
+                delta_2_x, delta_2_y = block_type[2][0], block_type[2][1]
+                if x+delta_1_x >= 0 and y+delta_1_y >=0 and x+delta_2_x >=0 and y+delta_2_y >=0 and x+delta_1_x < self.h and x+delta_2_x < self.h and y+delta_1_y <self.w and y+delta_2_y <self.w and board[x+delta_1_x][y+delta_1_y]== board[x+delta_2_x][y+delta_2_y]=='.' :
+                    #  print(x,y,delta_1_x,delta_1_y,delta_2_x,delta_2_y)
+                    #  self.print_board(board)
+                    board[x][y] = board[x+delta_1_x][y+delta_1_y] = board[x+delta_2_x][y+delta_2_y] = '#'
+                    ans += self.cover_helper(board)
+                    #  self.print_board(board)
+                    board[x][y] = board[x+delta_1_x][y+delta_1_y] = board[x+delta_2_x][y+delta_2_y] = '.'
 
-        ans = 0
-        for block_type in self.blocks:
-            x, y = blank[0], blank[1]
-            delta_1_x, delta_1_y = block_type[1][0], block_type[1][1]
-            delta_2_x, delta_2_y = block_type[2][0], block_type[2][1]
-            if x+delta_1_x >= 0 and y+delta_1_y >=0 and x+delta_2_x >=0 and y+delta_2_y >=0 and x+delta_1_x < self.h and x+delta_2_x < self.h and y+delta_1_y <self.w and y+delta_2_y <self.w and board[x+delta_1_x][y+delta_1_y]== board[x+delta_2_x][y+delta_2_y]=='.' :
-                #  print(x,y,delta_1_x,delta_1_y,delta_2_x,delta_2_y)
-                #  self.print_board(board)
-                board[x][y] = board[x+delta_1_x][y+delta_1_y] = board[x+delta_2_x][y+delta_2_y] = '#'
-                ans += self.cover_helper(board)
-                #  self.print_board(board)
-                board[x][y] = board[x+delta_1_x][y+delta_1_y] = board[x+delta_2_x][y+delta_2_y] = '.'
-
-        return ans
-
+            return ans
 
 def main():
     testcases = int(input())
