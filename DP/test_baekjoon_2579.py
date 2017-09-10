@@ -11,4 +11,8 @@ class Test_Class(object):
         assert 0
 
     def test_max_final_score(self):
-        game = 
+        game = JumpGame(6)
+        for s in '10\n20\n15\n25\n10\n20'.split('\n'):
+                        game.read_input(s)
+        max_score = game.max_final_score()
+        assert max_score == 75

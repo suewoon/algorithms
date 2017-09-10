@@ -11,7 +11,6 @@ class KLIS(object):
 
     def return_lis(self):
         cache = [None]*self.N
-        lis_arr =[[self.list[i]] for i in range(self.N)]
 
         def c(idx):
             if cache[idx] != None:
@@ -21,16 +20,17 @@ class KLIS(object):
                 for i in range(idx, self.N):
                     if self.list[idx] < self.list[i]:
                         ans = max(ans, c(i)+1)
-                        lis_arr[idx].append(self.list[i])
                 cache[idx] = ans
                 return ans
 
         ans = []
         for i in range(self.N):
             ans.append(c(i))
+        return  cache
 
-        print(lis_arr)
-        return ans
+    def reconstruct(self):
+        return 
+
 
 
 def main():

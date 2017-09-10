@@ -10,13 +10,24 @@ class JumpGame(object):
         self.scores.append(int(_input))
 
     def max_final_score(self):
-        def max_score_helper(start, score):
-            if start >=  self.N:
-                return score
-            score += self.scores[start]
-            return max(max_score_helper(start+1, score),
-                       max_score_helper(start+2, score))
-        return max_score_helper(0, 0)
+        memo = {}
+
+        def max_score_helper(start):
+            if start in memo:
+                return memo[start]
+
+            if start == self.N:
+                return self.scores[self.N]
+            elif start == self.N-1:
+                return self.scores[self.N] + self.scores[self.N-1]
+            elif start == self.N-2:
+                return self.scores[self.N] + self.scores[self.N-2]
+
+            ans = max(max_score_helper(start+1), max_score_helper(start+2)) + self.scores[start]
+            memo[start] = ans
+            return ans
+        print(memo)
+        return max(max_score_helper(0), max_score_helper(1))
 
 def main():
     N = int(input())
