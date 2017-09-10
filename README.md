@@ -6,3 +6,4 @@ Algorithm Type(s) | Folder
 ---|-------------
 Dynamic Programming | [Dynamic Programming](DP)
 Graph | [Graph Theory](GRAPH)
+Divide, Combine & Conquer | [Divide & Conquer](DC)
