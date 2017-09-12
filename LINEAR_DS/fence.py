@@ -2,30 +2,34 @@
 # solution for https://algospot.com/judge/problem/read/FENCE
 
 class Fence(object):
-    def __init__(self, N, h):
-        self.N = N
-        self.h = h
+    def __init__(self):
+        pass
 
-    def get_max_area(self):
-        max_area = [0]*self.N
-        def get_max_width(i, last_h):
-            if i >= self.N-1 :
-                return 1
-            if self.h[i+1] < last_h:
-                return 1
-            else:
-                return get_max_width(i+1, last_h)+1
-        for i in range(self.N):
-            max_area[i] = self.h[i]*get_max_width(i, self.h[i])
-        return max(max_area)
+    def get_max_area(self, N, h):
+            stack = []
+            ret =0
+            h.append(0)
+            for i in range(N+1):
+                while len(stack)>0 and h[stack[-1]] >= h[i]:
+                    j = stack[-1]
+                    stack.pop()
+                    width = -1
+            
+                    if len(stack)==0:
+                        width = i
+                    else:
+                        width = i - stack[-1] -1
+                    ret = max(ret, h[j]*width)
+                stack.append(i)
+            return ret
 
 def main():
     testcases = int(input())
     for i in range(testcases):
         N = int(input())
         h = [int(i) for i in input().split(' ')]
-        fence = Fence(N, h)
-        print(fence.get_max_area())
+        fence = Fence()
+        print(fence.get_max_area(N, h))
 
 if __name__ == '__main__':
     main()
