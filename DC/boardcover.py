@@ -4,11 +4,9 @@ import sys
 input = sys.stdin.readline
 
 class Board(object):
-    def __init__(self, h, w):
-        self.h = h
-        self.w = w
+    def __init__(self):
         self.board = []
-        self.cache = {} 
+        self.cache = {}
         self.blocks = [[(0, 0), (1, 0), (0, 1)], [(0, 0), (0, 1), (1, 1)],
                        [(0, 0), (1, 0), (1, 1)], [(0, 0), (1, 0), (1, -1)]]
 
@@ -26,8 +24,10 @@ class Board(object):
         return '\n'.join([''.join(['#' if e > 0 else '.' for e in row]) for row in board])
     
     def cover(self):
-        board_to_cover = self.board[:]
-        return self.cover_helper(board_to_cover)
+        board = [j for i in self.board for j in i]
+        if len(list(filter(lambda x:x==0, board))) % 3 != 0:
+              return 0
+        return self.cover_helper(self.board[:])
 
     def cover_helper(self, board):
         def is_covered(board, x, y, block_type, revert):
@@ -44,8 +44,8 @@ class Board(object):
             return covered
 
         available = False
-        for i in range(self.h):
-            for j in range(self.w):
+        for i in range(len(board)):
+            for j in range(len(board[0])):
                 if board[i][j] == 0:
                     blank = (i, j)
                     available = True  # find a blank space
@@ -64,7 +64,6 @@ class Board(object):
             ans = 0
             for block_type in range(4):
                 if is_covered(board, blank[1], blank[0], block_type, 1):
-                    # print(x,y,delta_1_x,delta_1_y,delta_2_x,delta_2_y)
                     ans += self.cover_helper(board)
                 is_covered(board, blank[1], blank[0], block_type, -1)
                 self.cache[self.to_string(board)] = ans
@@ -74,7 +73,7 @@ def main():
     testcases = int(input())
     for i in range(testcases):
         (h, w) = tuple([int(x) for x in input().split()])
-        b = Board(h, w)
+        b = Board()
         for i in range(h):
             b.read_line(input())
         print(b.cover())
