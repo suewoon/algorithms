@@ -15,7 +15,6 @@ class JumpGame(object):
         def max_score_helper(start):
             if start in memo:
                 return memo[start]
-
             if start == self.N:
                 return self.scores[self.N]
             elif start == self.N-1:
@@ -23,10 +22,12 @@ class JumpGame(object):
             elif start == self.N-2:
                 return self.scores[self.N] + self.scores[self.N-2]
 
-            ans = max(max_score_helper(start+1), max_score_helper(start+2)) + self.scores[start]
+            step_1_2 = self.scores[start] + self.scores[start+1] + max_score_helper(start+3)
+            step_2 = self.scores[start] + max_score_helper(start+2)
+            ans = max(step_1_2, step_2)
             memo[start] = ans
-            return ans
-        print(memo)
+            return ans 
+
         return max(max_score_helper(0), max_score_helper(1))
 
 def main():

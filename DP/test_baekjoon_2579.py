@@ -8,7 +8,7 @@ class Test_Class(object):
         for s in '10\n20\n15\n25\n10\n20'.split('\n'):
             game.read_input(s)
         print(game.scores)
-        assert 0
+        #assert 0
 
     def test_max_final_score(self):
         game = JumpGame(6)
