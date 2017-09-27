@@ -10,11 +10,14 @@ def get_ways(n, c):
         if n == 0:
             return 1
 
+        # c에서 index<0 이고 n은 다 못채웠을 때
         if m<=0 and n>=1:
             return 0
+
+        #c[m-1] 이 들어간 경우와 아예 안들어 간 경우 
         return get_ways_helper(n, m-1) + get_ways_helper(n-c[m-1], m)
 
-    return get_ways_helper(n, len(c))
+    return get_ways_helper
 
 
 def main():
