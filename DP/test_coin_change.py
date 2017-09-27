@@ -9,3 +9,6 @@ def test_case1():
 def test_case2():
     get_ways(4, [1,2,3]) == 4
 
+def test_case3():
+    get_ways(63, [1, 5, 10, 25]) == 6
+
