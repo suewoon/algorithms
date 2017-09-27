@@ -15,11 +15,13 @@ def make_substr2(string):
 
         else: # no redundancy.. 
             return 0
-    return make_substr(string)
+
+    return make_substr(string)%(10**9 +7)
 
 def main():
     string = input()
-    print(make_substr2(string))
+    ans = make_substr2(string)  
+    print(ans)
 
 if __name__ == '__main__':
     main()
