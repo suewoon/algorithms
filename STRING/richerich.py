@@ -1,34 +1,51 @@
 #!/bin/python3
 # https://www.hackerrank.com/challenges/richie-rich/problem
 
-import sys
 
 def richieRich(s, n, k):
-    # Complete this function
-    if n%2 == 0 :
-        first_half = s[int(n/2):]
-        second_half = s[:int(n/2)]
-    else:
-        first_half = s[int((n-1)/2):]
-        second_half = s[:int((n-1)/2)]
-    def make_palindrome(first_half, second_half, k):
-        half_len = len(first_half)
-        for i in range(half_len):
-            if first_half[i] != second_half[half_len-i-1]:
-                k -= 1 # k가 남아서 9로 바꿔주는 경우도 생각 .. 리스트 양쪽을 잘라내는 방법? 
-                
-                first_half[i] = second_half[half_len-i-1] = max(second_half[half_len-i-1],first_half[i])
-        return first_half, k
-    first_half, k = make_palindrome(list(first_half), list(second_half), k)
-    if k ==0:
-        second_half = first_half[:]
-        first_half.reverse()
-        return ''.join(str(x) for x in first_half+second_half)
-    elif k<0:
-        return -1
+    has_changed = [False]*n
+    # make palindrome
+    s = map(int, s)
+    str_list = list(s)
+    for i in range(n//2):
+        if str_list[i] < str_list[-i-1]:
+            str_list[i] = str_list[-i-1]
+            has_changed[i] = True
+            k -= 1
+        elif str_list[i] > str_list[-i-1]:
+            str_list[-i-1] = str_list[i]
+            has_changed[-i-1] = True
+            k -= 1
 
-n, k = tuple([int(x) for x in input().split()])
-s = input()
-result = richieRich(s, n, k)
-print(result)
+    if k < 0:
+        return '-1'
+    elif k == 0:
+        return ''.join(str(x) for x in str_list)
+    
+    i = 0
+    while k>=0 and i<n/2:
+        if str_list[i] == 9:
+            i += 1
+            continue
+        if k >= 1 and (has_changed[i] or has_changed[-i-1]):
+            str_list[i] = str_list[-i-1] = 9
+            k -= 1
+        elif k>= 2:
+            #digits haven't changed 
+            str_list[i] = str_list[-i-1] = 9
+            k -= 2
+        i += 1
+
+    if n%2 == 1 and k>0: # after the loops still 
+        str_list[n//2] = 9
+    return ''.join(str(x) for x in str_list)
+
+def main():
+    n, k = tuple([int(x) for x in input().split()])
+    s = map(int, input())
+    result = richieRich(s, n, k)
+    print(result)
+
+if __name__ == '__main__':
+    main()
 
