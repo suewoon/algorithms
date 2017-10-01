@@ -2,27 +2,21 @@
 # solution for https://www.hackerrank.com/challenges/bonetrousle
 from functools import lru_cache
 
-
-def select(n, b, k):
-    if b == 0:
-        return [[]]
-    return [[x] + suffix for i, x in enumerate(k) 
-            for suffix in select(n, b-1, k[i+1:]) if x <= n]
-
-
 @lru_cache(maxsize=32)
 def solve(n, k, b):
-    if n > sum(list(range(1, k+1))):
-        return '-1'
-    for combination in select(n, b, list(range(k, 0, -1))):
-        print(combination)
-        if sum(combination) == n:
-            break 
-        else:
-            combination = [-1]
-    return ' '.join(str(x) for x in combination)
+    min_range = list(range(1, b+1))
+    min_sum = sum(min_range)
+    max_sum = sum(range(k, k-b, -1))
+    if n < min_sum or n > max_sum:
+        return [-1]
 
-
+    d = (n-min_sum)//b
+    r = (n-min_sum)%b
+    ans = [d + x for x in min_range]
+    for i in range(b-1, b-r-1, -1):
+        ans[i] += 1 
+    return ans
+  
 """ def main():
     trips = int(input())
     for i in range(trips):
