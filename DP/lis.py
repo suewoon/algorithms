@@ -1,5 +1,6 @@
 #!/usr/bin/env python3 
-#  solution for https://algospot.com/judge/problem/read/LIS
+# solution for https://algospot.com/judge/problem/read/LIS
+# O(N^2)
 
 def lis(idx) :
     """
@@ -16,6 +17,7 @@ def lis(idx) :
     cache[idx] = ans
     return ans
 
+
 def main():
     testcases = int(input())
     for i in range(testcases):
@@ -26,7 +28,6 @@ def main():
         for x in range(0,length):
             ans = max(ans,lis(x))
         print(ans)
-    #print(cache)
 
 if __name__ == '__main__':
     main()
