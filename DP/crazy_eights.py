@@ -31,10 +31,11 @@ class CrazyEights(object):
     def get_longest_trick(self):
         memo = {}  # dictionary for memoization 
         n = len(self.cards)
+        came_from = {}
 
         def trick(i):
-            if i in memo: 
-                return memo[i] 
+            if i in memo:
+                return memo[i]
             elif i == n-1:
                 return 1
             else:
@@ -42,11 +43,16 @@ class CrazyEights(object):
                 for j in range(i+1, n):
                     if self.cards[i] == self.cards[j] and res < 1+trick(j):
                         res = 1 + trick(j)
+                        came_from[j] = i
                         memo[i] = res
             return res
 
-        trick(0)
-        print(memo)
+        for i in range(n):
+            if i not in came_from:
+                came_from[i]=None
+                trick(i)
+        #print(memo)
+        print(came_from)
         return max(memo.values())
 
 
