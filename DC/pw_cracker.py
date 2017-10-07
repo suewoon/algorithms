@@ -1,6 +1,7 @@
 #!/usr/local/bin python3
 # solution for https://www.hackerrank.com/challenges/password-cracker
-
+from sys import setrecursionlimit
+setrecursionlimit(4000)
 
 def parse(users, pass_arr, login_attempt):
     '''
@@ -8,20 +9,28 @@ def parse(users, pass_arr, login_attempt):
     according to pass[0] - pass[n-1]
     if can't - return 'WRONG PASSWORD'
     '''
-
-    def parse_(login_attempt, cur):
+    def parse_(login_attempt, cur, cache):
+        '''
+        cur: current answer 
+        cache: for memoization
+        '''
         if len(login_attempt) == 0:
             return cur
 
+        if login_attempt in cache:
+            # return empty string since it has been concatenated to cur
+            return ''
+
         for i in range(users):
             if login_attempt.startswith(pass_arr[i]):
-                cur_ans = parse_(login_attempt[len(pass_arr[i]):], cur+' '+pass_arr[i])
+                cur_ans = parse_(login_attempt[len(pass_arr[i]):], cur+' '+pass_arr[i], cache)
                 if cur_ans != '':
                     return cur_ans
 
+        cache.add(login_attempt)
         return ''
 
-    return parse_(login_attempt, '')
+    return parse_(login_attempt, '', set([]))
 
 
 
