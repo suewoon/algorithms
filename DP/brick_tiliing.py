@@ -9,12 +9,37 @@ bricks = [[(0,0), (0,1), (0,2), (1,0)], [(0,0), (0,1), (0,2), (1,2)],
           [(0,0), (0,1), (1,0), (2,0)], [(0,0), (1,0), (2,0), (2,-1)]]
 
 
+def check_col(board, h, w, j):
+    for i in range(h):
+        if board[i][j] == '.':
+            return False
+    return True
+
+def check_row(board, h, w, i):
+    for j in range(w):
+        if board[i][j] == '.':
+            return False
+    return True
+
+def getiStart(board, h, w):
+    for i in range(h):
+        if check_row(board, h, w, i) == False:
+            return i
+    return h
+
+def getjStart(board, h, w):
+    for j in range(w):
+        if check_col(board, h, w, j) == False:
+            return j
+    return w
+
 def get_hash(board, r, c):
     '''
     make hash out of 2D array, since array is not hashable 
     '''
-    return '\n'.join([str(row) for row in board])
-
+    istart = getiStart(board, r, c)
+    jstart = getjStart(board, r, c)
+    return str([x[jstart:] for x in board[istart:]])
 
 def cover(i, j, k, board, uncover):
     '''
