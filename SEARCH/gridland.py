@@ -2,6 +2,9 @@
 # solution for https://www.hackerrank.com/challenges/gridland-metro
 
 def get_empty_places(r, c, tracks):
+    '''
+    return an integer denoting the number of cells are not occupied
+    '''
     cache = {}
     for track in tracks:
         if track[0] in cache:
