@@ -3,19 +3,12 @@
 
 from functools import lru_cache
 def get_ways(n, c):
-
+    '''
+    return the number of ways to make n units out of the given c_0, ... c_m-1
+    coins
+    '''
     @lru_cache(maxsize=32)
     def get_ways_helper(n, m):
-        table = [[ 0 for i in range(m)] for i in range(n+1)]
-
-        for i in range(m):
-            # base case: n==0 일때 return 1
-            table[0][i] = 1
-
-        for i in range(1, n+1):
-            for j in range(m):
-                x = table[i-c[i]][j] if i - c[j] >=0 else 0
-
         if n < 0:
             return 0
         if n == 0:
@@ -29,6 +22,24 @@ def get_ways(n, c):
         return get_ways_helper(n, m-1) + get_ways_helper(n-c[m-1], m)
 
     return get_ways_helper(n, len(c))
+
+def get_ways2(n, c):
+    '''
+    Bottom-up approach
+    '''
+    m = len(c)
+    table = [[0 for _ in range(m)] for _ in range(n+1)]
+    
+    # base case n == 0
+    for i in range(m):
+        table[0][i] = 1
+
+    for i in range(1, n+1):
+        for j in range(m):
+            table[i][j] = (table[i][j-1] if j-1>=0 else 0) \
+                           + (table[i-c[j]][j] if i-c[j] >=0 else
+                                           0)
+    return table[n][m-1]
 
 
 def main():
