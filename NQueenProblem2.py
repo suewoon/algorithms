@@ -1,56 +1,31 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Mar  1 19:45:17 2017
+#!/usr/local/bin python3
+# N-Queen problem 
 
-@author: suewoonryu
-"""
+BOARD_SIZE = 8
 
+class BailOut(Exception):
+    pass
 
-class NQueenProblem(object):
-    """
-    given n*n board place n queens on this board so that 
-    they don't attack each other. Finding any placement 
-    of queens which do not attack each other. Once find out 
-    the solution, return the solution.
-    """
+def validate(queens):
+    left = right = col = queens[-1]
+    for r in reversed(queens[:-1]):
+        left, right = left-1, right+1
+        if r in (left, col, right):
+            raise BailOut
 
-    class Position(object):
-        def __init__(self, row, col):
-            self.row = row
-            self.col = col
-        def __repr__(self):
-            return '('+str(self.row)+','+str(self.col)+')'
+def add_queen(queens):
+    for i in range(BOARD_SIZE):
+        test_queens = queens + [i]
+        try:
+            validate(test_queens)
+            if len(test_queens) == BOARD_SIZE:
+                return test_queens
+            else:
+                return add_queen(test_queens)
+        except BailOut:
+            pass
+    raise BailOut
 
-    def solveNQueen(self, N):
-        position = [None]*N
-        assert (N >= 1 and 13 >= N)
-        hasSolution = self.solveNQueenUtil(N, 0, position)
-        if hasSolution:
-            return position
-        else:
-            print('no feasible solution')
-            return []
-
-    def solveNQueenUtil(self, N, row, positions):
-        if row == N:
-            return True
-
-        for col in range(N):
-            foundSafe = True
-            for queen in range(row):
-                if positions[queen].col == col or (positions[queen].row - positions[queen].col) == row - col or (positions[queen].row + positions[queen].col) == row + col:
-                    foundSafe = False
-                    break
-
-            if foundSafe:
-                positions[row] = self.Position(row, col)
-                if self.solveNQueenUtil(N, row + 1, positions):
-                    return True
-
-        return False
-
-N = int(input())
-s = NQueenProblem()
-positions = s.solveNQueen(N)
-print(positions)
-
+queens = add_queen([])
+print(queens)
+print("\n".join(". "*q + "Q " + ". "*(BOARD_SIZE-q-1) for q in queens))
