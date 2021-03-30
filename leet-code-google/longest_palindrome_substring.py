@@ -1,5 +1,6 @@
 # https://leetcode.com/problems/longest-palindromic-substring/
 # time limit exceed
+# brute force O(n^3)
 class Solution(object):
     def isPalindrome(self, s):
         if len(s) <= 1:
